@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
+// TODO: Move route out of ui state
 class ModifyBillsViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(ModifyBillUiState())
     val uiState = _uiState.asStateFlow()
@@ -38,10 +39,11 @@ class ModifyBillsViewModel : ViewModel() {
                 true -> old.selectedBills + bill
                 false -> old.selectedBills - bill
             }
-            old.copy(
-                route = ModifyBillsRoute.SelectBills,
-                selectedBills = bills
-            )
+            val updated = if (old.route != ModifyBillsRoute.SelectBills) {
+                old.copy(route = ModifyBillsRoute.SelectBills)
+            } else
+                old
+            updated.copy(selectedBills = bills)
         }
     }
 
@@ -51,10 +53,11 @@ class ModifyBillsViewModel : ViewModel() {
                 true -> old.selectedTables + id
                 false -> old.selectedTables - id
             }
-            old.copy(
-                route = ModifyBillsRoute.SelectTables,
-                selectedTables = tables
-            )
+            val updated = if (old.route != ModifyBillsRoute.SelectTables) {
+                old.copy(route = ModifyBillsRoute.SelectTables)
+            } else
+                old
+            updated.copy(selectedTables = tables)
         }
     }
 

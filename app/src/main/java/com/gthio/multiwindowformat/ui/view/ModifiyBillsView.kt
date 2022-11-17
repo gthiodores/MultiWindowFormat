@@ -54,42 +54,42 @@ private fun ModifyBillsMobileView(
     selectedBills: List<BillModel>,
     bills: List<BillModel>,
 ) {
-    when (currentRoute) {
-        ModifyBillsRoute.SelectBills -> {
-            Column {
-                SelectBillsView(
-                    onEvent = onEvent,
-                    modifier = Modifier.weight(1f),
-                    bills = bills,
-                    selectedBills = selectedBills,
-                )
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    onClick = { onEvent(ModifyBillsEvent.Navigate(ModifyBillsRoute.SelectTables)) }
-                ) {
-                    Text("To Tables")
-                }
-            }
+    Column {
+        when (currentRoute) {
+            ModifyBillsRoute.SelectBills -> SelectBillsView(
+                onEvent = onEvent,
+                selectedBills = selectedBills,
+                bills = bills,
+                modifier = Modifier.weight(1f)
+            )
+            ModifyBillsRoute.SelectTables -> SelectTableView(
+                onEvent = onEvent,
+                selectedTables = selectedTables,
+                tables = tables,
+                modifier = Modifier.weight(1f)
+            )
         }
-        ModifyBillsRoute.SelectTables -> {
-            Column {
-                SelectTableView(
-                    onEvent = onEvent,
-                    selectedTables = selectedTables,
-                    tables = tables,
-                    modifier = Modifier.weight(1f)
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            onClick = {
+                onEvent(
+                    when (currentRoute) {
+                        ModifyBillsRoute.SelectBills ->
+                            ModifyBillsEvent.Navigate(ModifyBillsRoute.SelectTables)
+                        ModifyBillsRoute.SelectTables ->
+                            ModifyBillsEvent.Navigate(ModifyBillsRoute.SelectBills)
+                    }
                 )
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    onClick = { onEvent(ModifyBillsEvent.Navigate(ModifyBillsRoute.SelectBills)) }
-                ) {
-                    Text("To Bills")
-                }
             }
+        ) {
+            Text(
+                when (currentRoute) {
+                    ModifyBillsRoute.SelectBills -> "To Tables"
+                    ModifyBillsRoute.SelectTables -> "To Bills"
+                }
+            )
         }
     }
 }
