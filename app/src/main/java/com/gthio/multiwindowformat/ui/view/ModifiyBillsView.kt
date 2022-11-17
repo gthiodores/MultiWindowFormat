@@ -67,9 +67,7 @@ private fun ModifyBillsMobileView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp),
-                    onClick = {
-                        onEvent(ModifyBillsEvent.Navigate(ModifyBillsRoute.SelectTables))
-                    }
+                    onClick = { onEvent(ModifyBillsEvent.Navigate(ModifyBillsRoute.SelectTables)) }
                 ) {
                     Text("To Tables")
                 }
@@ -87,9 +85,7 @@ private fun ModifyBillsMobileView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp),
-                    onClick = {
-                        onEvent(ModifyBillsEvent.Navigate(ModifyBillsRoute.SelectBills))
-                    }
+                    onClick = { onEvent(ModifyBillsEvent.Navigate(ModifyBillsRoute.SelectBills)) }
                 ) {
                     Text("To Bills")
                 }
