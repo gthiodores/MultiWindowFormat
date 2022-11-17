@@ -34,24 +34,26 @@ class ModifyBillsViewModel : ViewModel() {
 
     private fun handleSelectBills(bill: BillModel, shouldAdd: Boolean) {
         _uiState.update { old ->
+            val bills = when (shouldAdd) {
+                true -> old.selectedBills + bill
+                false -> old.selectedBills - bill
+            }
             old.copy(
                 route = ModifyBillsRoute.SelectBills,
-                selectedBills = if (!shouldAdd)
-                    old.selectedBills - bill
-                else
-                    old.selectedBills + bill
+                selectedBills = bills
             )
         }
     }
 
     private fun handleSelectTables(id: Int, shouldAdd: Boolean) {
         _uiState.update { old ->
+            val tables = when (shouldAdd) {
+                true -> old.selectedTables + id
+                false -> old.selectedTables - id
+            }
             old.copy(
                 route = ModifyBillsRoute.SelectTables,
-                selectedTables = if (!shouldAdd)
-                    old.selectedTables - id
-                else
-                    old.selectedTables + id
+                selectedTables = tables
             )
         }
     }
